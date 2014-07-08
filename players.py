@@ -46,9 +46,13 @@ class Dealer(User):
             for player in self.players:
                 player.hit()
             self.hit()
+        self.hand.cards[0].faceDown()
     
     def hitLong(self):
         while self.hand.getValue() < 17:
             self.hit()
+
+    def unveilCards(self):
+        self.hand.cards[0].faceUp()
 
 
