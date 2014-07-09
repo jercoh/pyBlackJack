@@ -9,6 +9,8 @@ VALUEMAP = {'A ':1, '2 ':2, '3 ':3, '4 ':4, '5 ':5,
 TOP = " _______"
 BOTTOM = "|_____"
 
+#####################################################
+
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit
@@ -28,6 +30,8 @@ class Card:
 
     def getValue(self):
         return VALUEMAP[self.rank]
+
+#####################################################
 
 class AsciiArtCard(Card):
     def __init__(self, rank, suit):
@@ -64,6 +68,8 @@ class AsciiArtCard(Card):
         self.third_line = "| * * * |"
         self.fourth_line = "| * * * |"
         self.bottom_line = BOTTOM+"__|"
+
+#####################################################
 
 class Hand:
     def __init__(self):
@@ -105,6 +111,8 @@ class Hand:
 
     def clear(self):
         self.cards = []
+
+#####################################################
 
 class Deck:
     def __init__(self, number_of_decks):

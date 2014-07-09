@@ -1,5 +1,7 @@
 from cards import Hand
 
+#####################################################
+
 class User:
     def __init__(self, deck):
         self.hand = Hand()
@@ -17,6 +19,7 @@ class User:
     def clear(self):
         self.hand.clear()
 
+#####################################################
 
 class Player(User):
     def __init__(self, deck):
@@ -36,6 +39,8 @@ class Player(User):
         return self.balance
     
     # def split():
+
+#####################################################
 
 class Dealer(User):
     def __init__(self, deck, players):
