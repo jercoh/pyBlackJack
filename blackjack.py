@@ -1,5 +1,6 @@
 from cards import Deck
 from players import Player, Dealer
+import asciiArts
 
 class BlackJack:
 	def __init__(self):
@@ -9,7 +10,7 @@ class BlackJack:
 		self.in_round = True
 
 	def start(self):
-		print "Welcome to pyBlackJack!\n"
+		asciiArts.printTitle()
 		print("Your balance is: "+str(self.player.getBalance()))
 		self.betStep()
 
