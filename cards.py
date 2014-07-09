@@ -102,11 +102,13 @@ class Hand:
 
     def getValue(self):
         value = 0
+        contains_an_ace = False
         for card in self.cards:
             value += card.getValue()
-        for card in self.cards:
-            if card.getRank() == 'A ' and value <= 11:
-                value += 10
+            if card.getRank() == 'A ':
+                contains_an_ace = True
+        if contains_an_ace and value <= 11:
+            value += 10
         return value
 
     def clear(self):

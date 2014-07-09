@@ -37,8 +37,6 @@ class Player(User):
 
     def getBalance(self):
         return self.balance
-    
-    # def split():
 
 #####################################################
 
