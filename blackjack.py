@@ -26,6 +26,9 @@ class BlackJack:
 			balance = self.player.getBalance()
 			if bet <= balance and bet >= 1:
 				self.player.bet(bet)
+				# The dealer deals 75% of the cards before a new shuffle
+				if self.deck.getNumberOfCardsLeft() < 78:
+					self.deck = Deck(6)
 				print("Dealing...")
 				self.dealer.deal()
 				self.in_round = True
@@ -113,8 +116,8 @@ class BlackJack:
 #####################################################
 
 def main():
-    game = BlackJack()
-    game.start()
+	game = BlackJack()
+	game.start()
 
 if __name__ == '__main__':
     main()

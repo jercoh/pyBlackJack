@@ -128,5 +128,8 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.playing_cards)
 
+    def getNumberOfCardsLeft(self):
+        return len(self.playing_cards)
+
     def pop(self):
         return self.playing_cards.pop(0)
