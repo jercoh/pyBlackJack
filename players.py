@@ -23,6 +23,7 @@ class Player(User):
         User.__init__(self, deck)
         self.balance = 100
         self.starting_bet = 0
+
     def bet(self, bet):
         if bet >= 1:
             self.starting_bet = bet

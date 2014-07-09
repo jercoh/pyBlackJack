@@ -37,10 +37,12 @@ class BlackJack:
 				continue
 
 	def playRound(self):
-		
+		# Player has won or lose
 		if self.gameIsOver():
 			self.dealer.unveilCards()
 			self.printHands()
+			print(self.end_message)
+
 		# Player has to make a move
 		else:
 			self.printHands()
@@ -60,24 +62,27 @@ class BlackJack:
 			# Dealer has also a BlackJack
 			if self.dealer.blackJack():
 				self.player.balance += self.player.getBet()
-				print("Even! Your new balance is: "+str(self.player.getBalance()))
+				self.end_message = "Even! Your new balance is: "+str(self.player.getBalance())
 			else:
 				self.player.balance += 2.5*self.player.getBet()
-				print("BlackJack! Your new balance is: "+str(self.player.getBalance()))
+				self.end_message = "BlackJack! Your new balance is: "+str(self.player.getBalance())
 			return True
+
 		# Player wins the round
 		elif self.playerWins():
 			self.player.balance += 2*self.player.getBet()
-			print("You win! Your new balance is: "+str(self.player.getBalance()))
+			self.end_message = "You win! Your new balance is: "+str(self.player.getBalance())
 			return True
+
 		# Player loses the round
 		elif self.playerLoses():
-			print("You Lose :( ! Your new balance is: "+str(self.player.getBalance()))
+			self.end_message = "You Lose :( ! Your new balance is: "+str(self.player.getBalance())
 			return True
-		# Player hand has the same value as Dealer's
+
+		# Player's hand has the same value as Dealer's
 		elif self.even():
 			self.player.balance += self.player.getBet()
-			print("Even! Your new balance is: "+str(self.player.getBalance()))
+			self.end_message = "Even! Your new balance is: "+str(self.player.getBalance())
 			return True
 		else:
 			return False
@@ -100,6 +105,7 @@ class BlackJack:
 	def printHands(self):
 		print("Player: (value: "+str(self.player.hand.getValue())+")\n"+str(self.player.hand))
 		print("Dealer:\n"+str(self.dealer.hand))
+
 
 def main():
     game = BlackJack()
