@@ -21,6 +21,7 @@ class BlackJack:
 		while self.player.getBalance() > 0:
 			self.player.clear()
 			self.dealer.clear()
+			utils.printSeparator()
 			bet = utils.getInteger("Enter your bet ($1 minimum): ")
 			balance = self.player.getBalance()
 			if bet <= balance and bet >= 1:
@@ -43,6 +44,7 @@ class BlackJack:
 		# Player has won or lose
 		if self.gameIsOver():
 			self.dealer.unveilCards()
+			utils.printSeparator()
 			self.printHands()
 			print(self.end_message)
 

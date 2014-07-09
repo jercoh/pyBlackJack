@@ -1,5 +1,5 @@
 # @author Jeremie Cohen - 090714
-"""Various utility functions for handling prompt messages and user input."""
+"""Various utility functions for handling prompt messages and console prints."""
 
 def getInteger(message):
 	"""Prompt message until the user types an integer"""
@@ -24,3 +24,6 @@ def getBoolean(message):
 	if user_input == 'y':
 		return True
 	return False
+
+def printSeparator():
+	print("=======================================================")
