@@ -23,6 +23,7 @@ class Player(User):
         User.__init__(self, deck)
         self.balance = 100
         self.starting_bet = 0
+
     def bet(self, bet):
         if bet >= 1:
             self.starting_bet = bet
@@ -46,9 +47,13 @@ class Dealer(User):
             for player in self.players:
                 player.hit()
             self.hit()
+        self.hand.cards[0].faceDown()
     
     def hitLong(self):
         while self.hand.getValue() < 17:
             self.hit()
+
+    def unveilCards(self):
+        self.hand.cards[0].faceUp()
 
 

@@ -1,5 +1,6 @@
 from cards import Deck
 from players import Player, Dealer
+import asciiArts
 
 class BlackJack:
 	def __init__(self):
@@ -9,7 +10,7 @@ class BlackJack:
 		self.in_round = True
 
 	def start(self):
-		print "Welcome to pyBlackJack!\n"
+		asciiArts.printTitle()
 		print("Your balance is: "+str(self.player.getBalance()))
 		self.betStep()
 
@@ -37,33 +38,15 @@ class BlackJack:
 				continue
 
 	def playRound(self):
-		self.printHands()
-		# Player has a BlackJack
-		if self.player.blackJack():
-			# Dealer has also a BlackJack
-			if self.dealer.blackJack():
-				self.player.balance += self.player.getBet()
-				print("Even! Your new balance is: "+str(self.player.getBalance()))
-			else:
-				self.player.balance += 2.5*self.player.getBet()
-				print("BlackJack! Your new balance is: "+str(self.player.getBalance()))
-			return
-		# Player wins the round
-		elif self.playerWins():
-			self.player.balance += 2*self.player.getBet()
-			print("You win! Your new balance is: "+str(self.player.getBalance()))
-			return
-		# Player loses the round
-		elif self.playerLoses():
-			print("You Lose :( ! Your new balance is: "+str(self.player.getBalance()))
-			return
-		# Player hand has the same value as Dealer's
-		elif self.even():
-			self.player.balance += self.player.getBet()
-			print("Even! Your new balance is: "+str(self.player.getBalance()))
-			return
+		# Player has won or lose
+		if self.gameIsOver():
+			self.dealer.unveilCards()
+			self.printHands()
+			print(self.end_message)
+
 		# Player has to make a move
 		else:
+			self.printHands()
 			action = raw_input("Hit or Stand?(h/s): ")
 			if action == 's':
 				self.dealer.hitLong()
@@ -74,6 +57,36 @@ class BlackJack:
 				print("Wrong input. What is your next move?\n")
 			self.playRound()
 
+	def gameIsOver(self):
+		# Player has a BlackJack
+		if self.player.blackJack():
+			# Dealer has also a BlackJack
+			if self.dealer.blackJack():
+				self.player.balance += self.player.getBet()
+				self.end_message = "Even! Your new balance is: "+str(self.player.getBalance())
+			else:
+				self.player.balance += 2.5*self.player.getBet()
+				self.end_message = "BlackJack! Your new balance is: "+str(self.player.getBalance())
+			return True
+
+		# Player wins the round
+		elif self.playerWins():
+			self.player.balance += 2*self.player.getBet()
+			self.end_message = "You win! Your new balance is: "+str(self.player.getBalance())
+			return True
+
+		# Player loses the round
+		elif self.playerLoses():
+			self.end_message = "You Lose :( ! Your new balance is: "+str(self.player.getBalance())
+			return True
+
+		# Player's hand has the same value as Dealer's
+		elif self.even():
+			self.player.balance += self.player.getBet()
+			self.end_message = "Even! Your new balance is: "+str(self.player.getBalance())
+			return True
+		else:
+			return False
 
 	def playerWins(self):
 		dealerValue = self.dealer.hand.getValue()
@@ -91,13 +104,13 @@ class BlackJack:
 		return self.in_round == False and (dealerValue == playerValue)
 
 	def printHands(self):
-		print("Player:"+str(self.player.hand.getValue())+"\n"+str(self.player.hand))
+		print("Player: (value: "+str(self.player.hand.getValue())+")\n"+str(self.player.hand))
 		print("Dealer:\n"+str(self.dealer.hand))
+
 
 def main():
     game = BlackJack()
     game.start()
-
 
 if __name__ == '__main__':
     main()

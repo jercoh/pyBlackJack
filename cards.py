@@ -33,6 +33,9 @@ class AsciiArtCard(Card):
     def __init__(self, rank, suit):
         Card.__init__(self, rank, suit)
         self.top_line = TOP
+        self.faceUp()
+
+    def faceUp(self):
         if self.getSuit() == "spade":
             self.first_line = "|"+self.getRank()+" .   |"
             self.second_line = "|  /.\  |"
@@ -54,6 +57,13 @@ class AsciiArtCard(Card):
             self.third_line = "|  \ /  |"
             self.fourth_line = "|   v   |"
         self.bottom_line = BOTTOM+self.getRank()+"|"
+
+    def faceDown(self):
+        self.first_line = "| * * * |"
+        self.second_line = "| * * * |"
+        self.third_line = "| * * * |"
+        self.fourth_line = "| * * * |"
+        self.bottom_line = BOTTOM+"__|"
 
 class Hand:
     def __init__(self):
