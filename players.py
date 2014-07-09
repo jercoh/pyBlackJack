@@ -11,10 +11,10 @@ class User:
         self.hand.deal(self.deck.pop())
 
     def bust(self):
-        return self.hand.getValue() > 21
+        return self.hand.get_value() > 21
 
     def blackJack(self):
-        return len(self.hand.cards) == 2 and self.hand.getValue() == 21
+        return len(self.hand.cards) == 2 and self.hand.get_value() == 21
 
     def clear(self):
         self.hand.clear()
@@ -32,10 +32,10 @@ class Player(User):
             self.starting_bet = bet
             self.balance -= bet
 
-    def getBet(self):
+    def get_bet(self):
         return self.starting_bet
 
-    def getBalance(self):
+    def get_balance(self):
         return self.balance
 
 #####################################################
@@ -50,13 +50,13 @@ class Dealer(User):
             for player in self.players:
                 player.hit()
             self.hit()
-        self.hand.cards[0].faceDown()
+        self.hand.cards[0].face_down()
     
-    def hitLong(self):
-        while self.hand.getValue() < 17:
+    def hit_long(self):
+        while self.hand.get_value() < 17:
             self.hit()
 
-    def unveilCards(self):
-        self.hand.cards[0].faceUp()
+    def unveil_cards(self):
+        self.hand.cards[0].face_up()
 
 

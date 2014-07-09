@@ -1,7 +1,7 @@
 # @author Jeremie Cohen - 090714
 """Various utility functions for handling prompt messages and console prints."""
 
-def getInteger(message):
+def get_integer(message):
 	"""Prompt message until the user types an integer"""
 	while True:
 		user_input = raw_input(message)
@@ -10,14 +10,14 @@ def getInteger(message):
 		except ValueError:
 			continue
 
-def getIntegerInRange(message, min, max):
+def get_integer_in_range(message, min, max):
 	"""Prompt message until the user types an integer in range(min, max)"""
 	while True:
-		user_input = getInteger(message)
+		user_input = get_integer(message)
 		if user_input in range(min, max):
 			return user_input
 
-def multipleChoiceQuestion(message, choices):
+def multiple_choice_question(message, choices):
 	"""Prompt message until the user answers within one of the choices"""
 	while True:
 		user_input = raw_input(message).lower()
@@ -25,12 +25,12 @@ def multipleChoiceQuestion(message, choices):
 			return user_input
 		continue
 
-def getBoolean(message):
+def get_boolean(message):
 	"""Prompt message until the user answers with y or n"""
-	user_input = multipleChoiceQuestion(message, ['y', 'n'])
+	user_input = multiple_choice_question(message, ['y', 'n'])
 	if user_input == 'y':
 		return True
 	return False
 
-def printSeparator():
+def print_separator():
 	print("=======================================================")

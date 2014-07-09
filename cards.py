@@ -19,16 +19,16 @@ class Card:
     def __str__(self):
         return self.rank + " of " + self.suit
 
-    def validSuits():
+    def valid_suits():
         return SUITLIST
 
-    def getSuit(self):
+    def get_suit(self):
         return self.suit
 
-    def getRank(self):
+    def get_rank(self):
         return self.rank
 
-    def getValue(self):
+    def get_value(self):
         return VALUEMAP[self.rank]
 
 #####################################################
@@ -37,32 +37,32 @@ class AsciiArtCard(Card):
     def __init__(self, rank, suit):
         Card.__init__(self, rank, suit)
         self.top_line = TOP
-        self.faceUp()
+        self.face_up()
 
-    def faceUp(self):
-        if self.getSuit() == "spade":
-            self.first_line = "|"+self.getRank()+" .   |"
+    def face_up(self):
+        if self.get_suit() == "spade":
+            self.first_line = "|"+self.get_rank()+" .   |"
             self.second_line = "|  /.\  |"
             self.third_line = "| (_._) |"
             self.fourth_line = "|   |   |"
-        elif self.getSuit() == "club":
-            self.first_line = "|"+self.getRank()+" _   |"
+        elif self.get_suit() == "club":
+            self.first_line = "|"+self.get_rank()+" _   |"
             self.second_line = "|  ( )  |"
             self.third_line = "| (_'_) |"
             self.fourth_line = "|   |   |"
-        elif self.getSuit() == "heart":
-            self.first_line = "|"+self.getRank()+"_ _  |"
+        elif self.get_suit() == "heart":
+            self.first_line = "|"+self.get_rank()+"_ _  |"
             self.second_line = "| ( v ) |"
             self.third_line = "|  \ /  |"
             self.fourth_line = "|   .   |"
-        elif self.getSuit() == "diamond":
-            self.first_line = "|"+self.getRank()+" .   |"
+        elif self.get_suit() == "diamond":
+            self.first_line = "|"+self.get_rank()+" .   |"
             self.second_line = "|  / \  |"
             self.third_line = "|  \ /  |"
             self.fourth_line = "|   v   |"
-        self.bottom_line = BOTTOM+self.getRank()+"|"
+        self.bottom_line = BOTTOM+self.get_rank()+"|"
 
-    def faceDown(self):
+    def face_down(self):
         self.first_line = "| * * * |"
         self.second_line = "| * * * |"
         self.third_line = "| * * * |"
@@ -100,12 +100,12 @@ class Hand:
     def deal(self, card):
         self.cards.append(card)
 
-    def getValue(self):
+    def get_value(self):
         value = 0
         contains_an_ace = False
         for card in self.cards:
-            value += card.getValue()
-            if card.getRank() == 'A ':
+            value += card.get_value()
+            if card.get_rank() == 'A ':
                 contains_an_ace = True
         if contains_an_ace and value <= 11:
             value += 10
@@ -128,7 +128,7 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.playing_cards)
 
-    def getNumberOfCardsLeft(self):
+    def get_number_of_cards_left(self):
         return len(self.playing_cards)
 
     def pop(self):

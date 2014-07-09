@@ -13,26 +13,26 @@ class BlackJack:
 		self.in_round = True
 
 	def start(self):
-		asciiArts.printTitle()
-		print("Your balance is: $"+str(self.player.getBalance()))
-		self.betStep()
+		asciiArts.print_title()
+		print("Your balance is: $"+str(self.player.get_balance()))
+		self.bet_step()
 
-	def betStep(self):
-		while self.player.getBalance() > 0:
+	def bet_step(self):
+		while self.player.get_balance() > 0:
 			self.player.clear()
 			self.dealer.clear()
-			utils.printSeparator()
-			bet = utils.getInteger("Enter your bet ($1 minimum): ")
-			balance = self.player.getBalance()
+			utils.print_separator()
+			bet = utils.get_integer("Enter your bet ($1 minimum): ")
+			balance = self.player.get_balance()
 			if bet <= balance and bet >= 1:
 				self.player.bet(bet)
 				# The dealer deals 75% of the cards before a new shuffle
-				if self.deck.getNumberOfCardsLeft() < 78:
+				if self.deck.get_number_of_cards_left() < 78:
 					self.deck = Deck(6)
 				print("Dealing...")
 				self.dealer.deal()
 				self.in_round = True
-				self.playRound()
+				self.round()
 			elif bet >= balance:
 				print("You cannot bet more than your current balance!")
 				continue
@@ -43,74 +43,74 @@ class BlackJack:
 				print("Wrong bet. Please enter a positive number greater than 1.")
 				continue
 
-	def playRound(self):
+	def round(self):
 		# Player has won or lose
-		if self.gameIsOver():
-			self.dealer.unveilCards()
-			utils.printSeparator()
-			self.printHands()
+		if self.is_game_over():
+			self.dealer.unveil_cards()
+			utils.print_separator()
+			self.print_hands()
 			print(self.end_message)
 
 		# Player has to make a move
 		else:
-			self.printHands()
-			action = utils.multipleChoiceQuestion("[H]it or [S]tand?: ", ['h', 's'])
+			self.print_hands()
+			action = utils.multiple_choice_question("[H]it or [S]tand?: ", ['h', 's'])
 			if action == 's':
-				self.dealer.hitLong()
+				self.dealer.hit_long()
 				self.in_round = False
 			elif action == 'h':
 				self.player.hit()
-			self.playRound()
+			self.round()
 
 
-	def gameIsOver(self):
+	def is_game_over(self):
 		# Player has a BlackJack
 		if self.player.blackJack():
 			# Dealer has also a BlackJack
 			if self.dealer.blackJack():
-				self.player.balance += self.player.getBet()
-				self.end_message = "Even! Your new balance is: $"+str(self.player.getBalance())
+				self.player.balance += self.player.get_bet()
+				self.end_message = "Even! Your new balance is: $"+str(self.player.get_balance())
 			else:
-				self.player.balance += 2.5*self.player.getBet()
-				self.end_message = "BlackJack! Your new balance is: $"+str(self.player.getBalance())
+				self.player.balance += 2.5*self.player.get_bet()
+				self.end_message = "BlackJack! Your new balance is: $"+str(self.player.get_balance())
 			return True
 
 		# Player wins the round
-		elif self.playerWins():
-			self.player.balance += 2*self.player.getBet()
-			self.end_message = "You win! Your new balance is: $"+str(self.player.getBalance())
+		elif self.player_wins():
+			self.player.balance += 2*self.player.get_bet()
+			self.end_message = "You win! Your new balance is: $"+str(self.player.get_balance())
 			return True
 
 		# Player loses the round
-		elif self.playerLoses():
-			self.end_message = "You Lose :( ! Your new balance is: $"+str(self.player.getBalance())
+		elif self.player_loses():
+			self.end_message = "You Lose :( ! Your new balance is: $"+str(self.player.get_balance())
 			return True
 
 		# Player's hand has the same value as Dealer's
 		elif self.even():
-			self.player.balance += self.player.getBet()
-			self.end_message = "Even! Your new balance is: $"+str(self.player.getBalance())
+			self.player.balance += self.player.get_bet()
+			self.end_message = "Even! Your new balance is: $"+str(self.player.get_balance())
 			return True
 		else:
 			return False
 
-	def playerWins(self):
-		dealerValue = self.dealer.hand.getValue()
-		playerValue = self.player.hand.getValue()
-		return self.in_round == False and ((self.dealer.bust() and playerValue <= 21) or (dealerValue < playerValue))
+	def player_wins(self):
+		dealer_value = self.dealer.hand.get_value()
+		player_value = self.player.hand.get_value()
+		return self.in_round == False and ((self.dealer.bust() and player_value <= 21) or (dealer_value < player_value))
 
-	def playerLoses(self):
-		dealerValue = self.dealer.hand.getValue()
-		playerValue = self.player.hand.getValue()
-		return (self.in_round == False and (dealerValue > playerValue)) or self.player.bust()
+	def player_loses(self):
+		dealer_value = self.dealer.hand.get_value()
+		player_value = self.player.hand.get_value()
+		return (self.in_round == False and (dealer_value > player_value)) or self.player.bust()
 
 	def even(self):
-		dealerValue = self.dealer.hand.getValue()
-		playerValue = self.player.hand.getValue()
-		return self.in_round == False and (dealerValue == playerValue)
+		dealer_value = self.dealer.hand.get_value()
+		player_value = self.player.hand.get_value()
+		return self.in_round == False and (dealer_value == player_value)
 
-	def printHands(self):
-		print("Player: (value: "+str(self.player.hand.getValue())+")\n"+str(self.player.hand))
+	def print_hands(self):
+		print("Player: (value: "+str(self.player.hand.get_value())+")\n"+str(self.player.hand))
 		print("Dealer:\n"+str(self.dealer.hand))
 
 #####################################################
