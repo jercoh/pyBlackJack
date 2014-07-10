@@ -1,7 +1,7 @@
 # @author Jeremie Cohen - 090714
 """Various utility functions for handling prompt messages and console prints."""
 
-def get_integer(message):
+def read_integer(message):
 	"""Prompt message until the user types an integer"""
 	while True:
 		user_input = raw_input(message)
@@ -10,7 +10,7 @@ def get_integer(message):
 		except ValueError:
 			continue
 
-def get_integer_in_range(message, min, max):
+def read_integer_in_range(message, min, max):
 	"""Prompt message until the user types an integer in range(min, max)"""
 	while True:
 		user_input = get_integer(message)
@@ -25,7 +25,7 @@ def multiple_choice_question(message, choices):
 			return user_input
 		continue
 
-def get_boolean(message):
+def read_boolean(message):
 	"""Prompt message until the user answers with y or n"""
 	user_input = multiple_choice_question(message, ['y', 'n'])
 	if user_input == 'y':

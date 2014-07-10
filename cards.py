@@ -1,4 +1,5 @@
 # @author Jeremie Cohen - 070714
+"""Cards, hand and deck models. A hand contains 2 or more cards. A deck contains a multiple of 52 cards."""
 import random
 
 SUITLIST = ('heart', 'diamond', 'spade', 'club')
@@ -13,6 +14,7 @@ BOTTOM = "|_____"
 #####################################################
 
 class Card:
+    """Define a card"""
     def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
@@ -21,26 +23,32 @@ class Card:
         return self.rank + " of " + self.suit
 
     def valid_suits():
+        """Return the list of valid suits"""
         return SUITLIST
 
     def get_suit(self):
+        """Return card's suit"""
         return self.suit
 
     def get_rank(self):
+        """Return card's rank"""
         return self.rank
 
     def get_value(self):
+        """Return card's blackjack value"""
         return VALUEMAP[self.rank]
 
 #####################################################
 
 class AsciiArtCard(Card):
+    """Define a AsciiArt card. Inherits from Card."""
     def __init__(self, rank, suit):
         Card.__init__(self, rank, suit)
         self.top_line = TOP
         self.face_up()
 
     def face_up(self):
+        """Flip an AsciiArt card face up."""
         if self.get_suit() == "spade":
             self.first_line = "|"+self.get_rank()+" .   |"
             self.second_line = "|  /.\  |"
@@ -64,6 +72,7 @@ class AsciiArtCard(Card):
         self.bottom_line = BOTTOM+self.get_rank()+"|"
 
     def face_down(self):
+        """Flip an AsciiArt card face down."""
         self.first_line = "| * * * |"
         self.second_line = "| * * * |"
         self.third_line = "| * * * |"
@@ -73,6 +82,7 @@ class AsciiArtCard(Card):
 #####################################################
 
 class Hand:
+    """Define a Hand of Cards. Its status is either 'active', 'busted', blackjack' or 'finished'."""
     def __init__(self):
         self.cards = []
         self.status = "active"
@@ -100,9 +110,11 @@ class Hand:
         return result
 
     def deal(self, card):
+        """Add a card to the hand"""
         self.cards.append(card)
 
     def get_value(self):
+        """Return hand's total value"""
         value = 0
         contains_an_ace = False
         for card in self.cards:
@@ -114,12 +126,15 @@ class Hand:
         return value
 
     def clear(self):
+        """Remove all cards from the hand"""
         self.cards = []
 
     def is_blackJack(self):
+        """Return True if the hand is a BlackJack"""
         return len(self.cards) == 2 and self.get_value() == 21
 
     def is_splittable(self):
+        """Return True if the hand is a splittable pair"""
         if len(self.cards) == 2 and len(set([self.cards[0].get_rank(), self.cards[1].get_rank()])) == 1:
             return True
         return False
@@ -127,6 +142,7 @@ class Hand:
 #####################################################
 
 class Deck:
+    """Define a deck of cards."""
     def __init__(self, number_of_decks):
         self.playing_cards = []
         for _ in range(number_of_decks):
@@ -136,10 +152,13 @@ class Deck:
         self.shuffle()
 
     def shuffle(self):
+        """Randomly shuffle the deck"""
         random.shuffle(self.playing_cards)
 
     def get_number_of_cards_left(self):
+        """Return the number of cards remaining in the deck"""
         return len(self.playing_cards)
 
     def pop(self):
+        """Return a card from the top of the deck"""
         return self.playing_cards.pop(0)
