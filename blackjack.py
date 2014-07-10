@@ -1,4 +1,5 @@
 # @author Jeremie Cohen - 070714
+"""pyBlackJack main file"""
 from cards import Deck
 from players import Player, Dealer
 import asciiArts
@@ -57,7 +58,7 @@ class BlackJack:
 		print("Dealing...")
 		self.dealer.deal()
 		utils.print_separator()
-		self.print_dealer_hand()
+		self.print_dealer_hand(False)
 
 		# Check if hands can be split
 		self.split_step()
@@ -71,7 +72,7 @@ class BlackJack:
 		"""End of a game. The dealer hits and unveil his cards. Finally the results are displayed."""
 		self.dealer.unveil_cards()
 		self.dealer.hit_long()
-		self.print_dealer_hand()
+		self.print_dealer_hand(True)
 		self.display_results()
 
 	def bet_step(self):
@@ -163,7 +164,7 @@ class BlackJack:
 						print("You bust!\n")
 
 	def display_results(self):
-		"""Calculate player's gain and display results at the end of the round."""
+		"""Compute player's gain and display results at the end of the round."""
 		gain = 0
 
 		# Check if dealer is busted
@@ -187,7 +188,7 @@ class BlackJack:
 				if hand.is_blackJack():
 					gain += self.player.get_bet()
 		
-		# Delear is neither busted or BlackJack
+		# Dealer is neither busted or BlackJack
 		else:
 			# Compute player's gain. Loop through player's hands
 			for hand in self.player.hands:
@@ -213,10 +214,13 @@ class BlackJack:
 		utils.print_separator()
 		utils.print_separator()
 
-	def print_dealer_hand(self):
+	def print_dealer_hand(self, with_value):
 		"""Print dealer's hand."""
 		print("Dealer's hand:\n")
-		print("value: "+str(self.dealer.hand.get_value())+"\n"+str(self.dealer.hand))
+		if with_value:
+			print("value: "+str(self.dealer.hand.get_value())+"\n"+str(self.dealer.hand))
+		else:
+			print(str(self.dealer.hand))
 
 	def print_player_hand(self):
 		"""Print player's current hand."""
