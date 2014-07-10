@@ -157,8 +157,8 @@ class Deck:
 
     def pop(self):
         """Pop a card from the top of the deck"""
-        return self.playing_cards.pop(0
+        return self.playing_cards.pop(0)
 
     def get_number_of_cards_left(self):
         """Return the number of cards remaining in the deck"""
-        return len(self.playing_cards))
+        return len(self.playing_cards)

@@ -114,6 +114,7 @@ class BlackJack:
 	def split_step(self):
 		"""If player's hand is a pair, he has to choose whether he wants to split it or not."""
 		for i in range(len(self.player.hands)):
+			self.player.hand = self.player.hands[i]
 			# Check if player's hand is splittable (Player can play a maximum of 4 hands at the same time)
 			if self.player.hand.is_splittable() and len(self.player.hands) < 4:
 

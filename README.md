@@ -2,6 +2,8 @@
 
 pyBlackJack is a text-based Blackjack game written in Python.
 
+![screenshot](http://cl.ly/WWQI/Capture%20d%E2%80%99e%CC%81cran%202014-07-11%20a%CC%80%2001.02.10.png)
+
 # Instructions #
 
 Clone pyBlackJack repository. Extract the files and run the following command:
