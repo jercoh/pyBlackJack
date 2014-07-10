@@ -1,3 +1,4 @@
+# @author Jeremie Cohen - 070714
 import random
 
 SUITLIST = ('heart', 'diamond', 'spade', 'club')
@@ -74,6 +75,7 @@ class AsciiArtCard(Card):
 class Hand:
     def __init__(self):
         self.cards = []
+        self.status = "active"
 
     def __str__(self):
         result = ""
@@ -113,6 +115,14 @@ class Hand:
 
     def clear(self):
         self.cards = []
+
+    def is_blackJack(self):
+        return len(self.cards) == 2 and self.get_value() == 21
+
+    def is_splittable(self):
+        if len(self.cards) == 2 and len(set([self.cards[0].get_rank(), self.cards[1].get_rank()])) == 1:
+            return True
+        return False
 
 #####################################################
 
