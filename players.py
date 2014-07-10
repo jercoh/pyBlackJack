@@ -28,12 +28,6 @@ class Player(User):
         self.bankroll = 100
         self.starting_bet = 0
 
-    def bet(self, bet):
-        """Define how many chips, the player is betting."""
-        if bet >= 1:
-            self.starting_bet = bet
-            self.bankroll -= bet
-
     def get_bet(self):
         """Return player's bet."""
         return self.starting_bet
@@ -41,6 +35,16 @@ class Player(User):
     def get_bankroll(self):
         """Return player's bankroll."""
         return self.bankroll
+
+    def can_split(self):
+        """Check if the player has enough chips to split."""
+        return self.bankroll >= self.starting_bet
+
+    def bet(self, bet):
+        """Define how many chips, the player is betting."""
+        if bet >= 1:
+            self.starting_bet = bet
+            self.bankroll -= bet
 
     def split(self):
         """Split a hand containing a pair. Create two separate hands that have the same first card."""
@@ -59,10 +63,6 @@ class Player(User):
 
         # Add the new hand to self.hands array
         self.hands.append(new_hand)
-
-    def can_split(self):
-        """Check if the player has enough chips to split."""
-        return self.bankroll >= self.starting_bet
 
     def clear(self):
         """Remove player's hands."""

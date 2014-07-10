@@ -22,10 +22,6 @@ class Card:
     def __str__(self):
         return self.rank + " of " + self.suit
 
-    def valid_suits():
-        """Return the list of valid suits"""
-        return SUITLIST
-
     def get_suit(self):
         """Return card's suit"""
         return self.suit
@@ -37,6 +33,10 @@ class Card:
     def get_value(self):
         """Return card's blackjack value"""
         return VALUEMAP[self.rank]
+
+    def valid_suits():
+        """Return the list of valid suits"""
+        return SUITLIST
 
 #####################################################
 
@@ -109,10 +109,6 @@ class Hand:
         result += "\n"
         return result
 
-    def deal(self, card):
-        """Add a card to the hand"""
-        self.cards.append(card)
-
     def get_value(self):
         """Return hand's total value"""
         value = 0
@@ -124,6 +120,10 @@ class Hand:
         if contains_an_ace and value <= 11:
             value += 10
         return value
+
+    def deal(self, card):
+        """Add a card to the hand"""
+        self.cards.append(card)
 
     def clear(self):
         """Remove all cards from the hand"""
@@ -155,10 +155,10 @@ class Deck:
         """Randomly shuffle the deck"""
         random.shuffle(self.playing_cards)
 
+    def pop(self):
+        """Pop a card from the top of the deck"""
+        return self.playing_cards.pop(0
+
     def get_number_of_cards_left(self):
         """Return the number of cards remaining in the deck"""
-        return len(self.playing_cards)
-
-    def pop(self):
-        """Return a card from the top of the deck"""
-        return self.playing_cards.pop(0)
+        return len(self.playing_cards))
