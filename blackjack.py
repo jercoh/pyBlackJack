@@ -26,9 +26,9 @@ class BlackJack:
 		utils.print_separator()
 
 		# While the player has enough money to play
-		while self.player.get_balance() > 0:
-			# Display player's balance
-			print("Your current balance is: "+str(self.player.get_balance()))+" chips."
+		while self.player.get_bankroll() > 0:
+			# Display player's bankroll
+			print("Your current bankroll is: "+str(self.player.get_bankroll()))+" chips."
 
 			# Play a game
 			self.play()
@@ -50,7 +50,7 @@ class BlackJack:
 		# Register player's bet
 		self.player.bet(bet)
 
-		# If the dealer dealt 75% of the cards, shuffle a new deck
+		# If the dealer has dealt 75% of the cards, then shuffle a new deck
 		if self.deck.get_number_of_cards_left() < 78:
 			self.deck = Deck(6)
 
@@ -69,7 +69,7 @@ class BlackJack:
 			self.play_hand(i)
 
 	def end(self):
-		"""End of a game. The dealer hits and unveil his cards. Finally the results are displayed."""
+		"""End of player's turn. The dealer plays and unveils his cards. The results are then displayed."""
 		self.dealer.unveil_cards()
 		self.dealer.hit_long()
 		self.print_dealer_hand(True)
@@ -81,15 +81,15 @@ class BlackJack:
 			# Ask for the bet
 			bet = utils.read_integer("Enter your bet (1 chip minimum): ")
 
-			balance = self.player.get_balance()
+			bankroll = self.player.get_bankroll()
 
-			# If the bet is less than player's balance and higher than 1 chip, play the round
-			if bet <= balance and bet >= 1:
+			# If the bet is less than player's bankroll and higher than 1 chip, play the round
+			if bet <= bankroll and bet >= 1:
 				return bet
 
-			# The bet is higher than player's balance
-			elif bet >= balance:
-				print("You cannot bet more than your current balance!")
+			# The bet is higher than player's bankroll
+			elif bet >= bankroll:
+				print("You cannot bet more than your current bankroll!")
 				continue
 
 			# The bet is lower than 1 chip
@@ -105,7 +105,7 @@ class BlackJack:
 	def split_step(self):
 		"""If player's hand is a pair, he has to choose whether he wants to split it or not."""
 		for i in range(len(self.player.hands)):
-			# Check if the hand is splittable (Player can play a maximum of 4 hands at the same time)
+			# Check if player's hand is splittable (Player can play a maximum of 4 hands at the same time)
 			if self.player.hand.is_splittable() and len(self.player.hands) < 4:
 
 				# Print player's hand
@@ -113,22 +113,22 @@ class BlackJack:
 				print("Player's hand #"+str(i)+":\n")
 				self.print_player_hand()
 
-				# Ask the player whether he wants to split the hand or not
+				# Ask player whether he wants to split the hand or not
 				do_split = utils.read_boolean("Do you want to split? (Y/N)")
 
 				if do_split:
-					# Check if the player has enough chips to split
+					# Check if player has enough chips to split
 					if self.player.can_split():
 
 						# Split the hand
 						self.player.split()
 
-						# Recursive call of split_bet to check if the new hands can also be splitted
+						# Recursive call of split_bet to check if the new hands can also be split
 						self.split_step()
 						break
 
 					else:
-						print("Sorry, you don't have enough money to split!")
+						print("Sorry, you don't have enough chips to split!")
 
 	def play_hand(self, i):
 		"""Play a hand."""
@@ -188,7 +188,7 @@ class BlackJack:
 				if hand.is_blackJack():
 					gain += self.player.get_bet()
 		
-		# Dealer is neither busted or BlackJack
+		# Dealer has neither busted nor got a BlackJack
 		else:
 			# Compute player's gain. Loop through player's hands
 			for hand in self.player.hands:
@@ -201,16 +201,16 @@ class BlackJack:
 						gain += self.player.get_bet()
 
 		# Add gain to player's account
-		self.player.balance += gain
+		self.player.bankroll += gain
 
 		# Player wins chips
 		if gain > 0:
-			print("You won "+str(gain)+" chip(s)! Your new balance is: "+str(self.player.get_balance()))+" chips."
+			print("You won "+str(gain)+" chip(s)! Your new bankroll is: "+str(self.player.get_bankroll()))+" chips."
 
 		# Player loses chips
 		else:
 			loss = len(self.player.hands)*self.player.get_bet()
-			print("You lost "+str(loss)+" chip(s)... Your new balance is: "+str(self.player.get_balance()))+" chips."
+			print("You lost "+str(loss)+" chip(s)... Your new bankroll is: "+str(self.player.get_bankroll()))+" chips."
 		utils.print_separator()
 		utils.print_separator()
 
@@ -233,7 +233,7 @@ def main():
 	"""Main function"""
 
 	# Instantiate a BlackJack game
-	game = BlackJack()
+	game = BlackJack()@
 
 	# Start the game
 	game.start()

@@ -13,7 +13,7 @@ def read_integer(message):
 def read_integer_in_range(message, min, max):
 	"""Prompt message until the user types an integer in range(min, max)"""
 	while True:
-		user_input = get_integer(message)
+		user_input = read_integer(message)
 		if user_input in range(min, max):
 			return user_input
 

@@ -25,25 +25,25 @@ class Player(User):
         User.__init__(self, deck)
         self.hands = [Hand()]
         self.hand = self.hands[0]
-        self.balance = 100
+        self.bankroll = 100
         self.starting_bet = 0
 
     def bet(self, bet):
         """Define how many chips, the player is betting."""
         if bet >= 1:
             self.starting_bet = bet
-            self.balance -= bet
+            self.bankroll -= bet
 
     def get_bet(self):
         """Return player's bet."""
         return self.starting_bet
 
-    def get_balance(self):
-        """Return player's balance."""
-        return self.balance
+    def get_bankroll(self):
+        """Return player's bankroll."""
+        return self.bankroll
 
     def split(self):
-        """Split a hand containing a pair. Create two separate hands that has the same first card."""
+        """Split a hand containing a pair. Create two separate hands that have the same first card."""
         # Create a new hand
         new_hand = Hand()
 
@@ -62,7 +62,7 @@ class Player(User):
 
     def can_split(self):
         """Check if the player has enough chips to split."""
-        return self.balance >= self.starting_bet
+        return self.bankroll >= self.starting_bet
 
     def clear(self):
         """Remove player's hands."""
@@ -88,7 +88,7 @@ class Dealer(User):
         self.hand.cards[0].face_down()
     
     def hit_long(self):
-        """The dealer hits until 17. Dealer doesn't hit soft 17 in pyBlackJack."""
+        """The dealer hits until 17. In pyBlackJack dealer stands on soft 17."""
         while self.hand.get_value() < 17:
             self.hit()
 
@@ -99,5 +99,3 @@ class Dealer(User):
     def clear(self):
         """Remove dealer's hand."""
         self.hand.clear()
-
-
